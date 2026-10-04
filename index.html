@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>REDLINE X</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="REDLINE X"><meta name="theme-color" content="#07080d">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#ff1838">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<style>
+#pwaInstall{position:fixed;right:12px;top:12px;z-index:99999;display:none;
+  border:1px solid #ff1838;background:#111;color:#fff;border-radius:12px;
+  padding:10px 14px;font:800 13px system-ui;box-shadow:0 6px 24px #0008}
+#pwaInstall.show{display:block}
+#pwaToast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+  z-index:99999;display:none;background:#111;color:#fff;border:1px solid #ff1838;
+  border-radius:12px;padding:12px 16px;font:700 13px system-ui;text-align:center;max-width:90vw}
+</style>
+</head><body>
+<div id="sl"></div><div id="flash"></div>
+<div id="tst"></div><div id="hud"><canvas id="spw" width="240" height="240"></canvas><div id="hmi"></div>
+<div class="hb" style="left:max(10px,env(safe-area-inset-left))"><small>LEVEL</small><b id="hl">1</b><small>BOOSTER</small><div class="bar"><i id="hn"></i></div><small>HULL</small><div class="bar hp"><i id="hh"></i></div></div>
+<div class="hb" style="right:max(10px,env(safe-area-inset-right));top:calc(env(safe-area-inset-top,0px) + 124px);text-align:right"><small>DISTANCE</small><b id="hd">0000 M</b><small>SCORE <span id="hsc">0</span> &nbsp; <span id="hm">x1</span></small></div>
+<div class="hb" style="right:max(10px,env(safe-area-inset-right));text-align:right"><small>COINS</small><b id="hc">🪙 0000</b><small>BEST <span id="hb">0000</span></small><div id="pz">II</div></div>
+</div>
+<div id="tc">
+<div class="tb" id="bL" data-k="l">◀</div><div class="tb" id="bR" data-k="r">▶</div>
+<div class="tb t" id="brk" data-k="b">BRAKE</div><div class="tb t" id="gas" data-k="g">ACCEL</div>
+<div class="tb t" id="nit" data-k="n">BOOSTER</div><div class="tb t" id="hrn" data-k="h">HORN</div>
+</div>
+<div class="scr" id="menu"><div><h1>REDLINE X</h1><div class="sub">SUPER BIKE & CAR STREET RUSH</div></div>
+<div class="row" style="max-width:560px"><button class="btn" data-a="play">START</button><button class="btn" data-a="mis">MISSIONS</button><button class="btn g" data-a="garage">GARAGE</button><button class="btn g" data-a="maps">MAPS</button><button class="btn g" data-a="how">HOW TO PLAY</button><button class="btn g" data-a="set">SETTINGS</button></div></div>
+<div class="scr" id="garage"><div class="panel"><h2>GARAGE</h2><div id="gc"></div><div id="gs"></div><div id="gu"></div><div class="up" style="gap:1vmin"><button class="btn" data-a="play">PLAY</button><button class="btn g" data-a="menu">BACK</button></div></div></div>
+<div class="scr" id="how"><div class="panel"><h2>HOW TO PLAY</h2>START: ride as far as you can. Every 500 m is a new level with faster, denser traffic, and you get a hull repair.<br>Hold ACCEL to speed up, BRAKE to slow, steer between lanes. Tap HORN to scare slow riders out of your lane.<br>Hold BOOSTER for a speed burst; it refills while released.<br>MISSIONS: finish a goal to win coins. MAPS: pick your road.<br>Keyboard: A/D steer, W/S accel and brake, Space booster, H horn, Esc pause.</div><button class="btn g" data-a="menu">BACK</button></div>
+<div class="scr" id="mis"><h2>MISSIONS</h2><div class="lst" id="ml"></div><button class="btn g" data-a="menu">BACK</button></div><div class="scr" id="maps"><h2>MAPS</h2><div class="lst" id="mpl"></div><button class="btn g" data-a="menu">BACK</button></div>
+<div class="scr" id="set"><div class="panel"><h2>SETTINGS</h2><div id="sb"></div></div><button class="btn g" data-a="menu">BACK</button></div>
+<div class="scr" id="pause"><h2>PAUSED</h2><button class="btn" data-a="resume">RESUME</button><button class="btn g" data-a="again">RESTART</button><button class="btn g" data-a="menu">MAIN MENU</button></div>
+<div class="scr" id="over"><h2 id="oh" style="color:var(--red)">GAME OVER</h2><div class="panel" id="ov"></div><div class="row"><button class="btn" data-a="again">PLAY AGAIN</button><button class="btn g" data-a="garage">GARAGE</button><button class="btn g" data-a="menu">MAIN MENU</button></div></div>
+<script src="script.js"></script>
+
+
+<button id="pwaInstall" type="button">⬇ INSTALL GAME</button>
+<div id="pwaToast"></div>
+
+</body></html>
