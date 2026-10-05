@@ -1,7 +1,7 @@
-const CACHE = "redline-x-v1";
+const CACHE = "redline-x-v4";
 const APP_SHELL = [
   "./",
-  "./redline-x-mobile.html",
+  "./index.html",
   "./manifest.webmanifest",
   "./icons/icon-192.png",
   "./icons/icon-512.png"
@@ -9,15 +9,17 @@ const APP_SHELL = [
 
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE).then(cache => cache.addAll(APP_SHELL)).then(() => self.skipWaiting())
+    caches.open(CACHE)
+      .then(cache => cache.addAll(APP_SHELL))
+      .then(() => self.skipWaiting())
   );
 });
 
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    ).then(() => self.clients.claim())
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
   );
 });
 
@@ -26,17 +28,20 @@ self.addEventListener("fetch", event => {
   if (req.method !== "GET") return;
 
   event.respondWith(
-    caches.match(req).then(cached => {
-      if (cached) return cached;
-      return fetch(req).then(res => {
-        if (res.ok && (new URL(req.url).origin === location.origin ||
-                       req.url.includes("cdnjs.cloudflare.com") ||
-                       req.url.includes("cdn.jsdelivr.net"))) {
-          const copy = res.clone();
-          caches.open(CACHE).then(cache => cache.put(req, copy));
-        }
-        return res;
-      }).catch(() => caches.match("./redline-x-mobile.html"));
-    })
+    fetch(req).then(res => {
+      if (res.ok && (
+        new URL(req.url).origin === location.origin ||
+        req.url.includes("cdnjs.cloudflare.com") ||
+        req.url.includes("cdn.jsdelivr.net") ||
+        req.url.includes("fonts.googleapis.com") ||
+        req.url.includes("fonts.gstatic.com")
+      )) {
+        const copy = res.clone();
+        caches.open(CACHE).then(cache => cache.put(req, copy));
+      }
+      return res;
+    }).catch(() =>
+      caches.match(req).then(cached => cached || caches.match("./index.html"))
+    )
   );
 });
